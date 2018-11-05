@@ -2,14 +2,16 @@
 
 var expect = require('chai').expect;
 
+var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../../..');
 var Address = btcLib.Address;
-var errors = btcLib.errors;
+var errors = owsCommon.errors;
 var Input = btcLib.Transaction.Input;
 var Networks = btcLib.Networks;
-var PrivateKey = btcLib.PrivateKey;
+var PrivateKey = keyLib.PrivateKey;
 var Script = btcLib.Script;
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 describe('Transaction.Input', function() {
 
@@ -52,7 +54,7 @@ describe('Transaction.Input', function() {
 
   it('has abstract methods: "getSignatures", "isFullySigned", "addSignature", "clearSignatures"', function() {
     var input = new Input(output);
-    _.each(['getSignatures', 'isFullySigned', 'addSignature', 'clearSignatures'], function(method) {
+    lodash.each(['getSignatures', 'isFullySigned', 'addSignature', 'clearSignatures'], function(method) {
       expect(function() {
         return input[method]();
       }).to.throw(errors.AbstractMethodInvoked);

@@ -2,14 +2,14 @@
 
 var should = require('chai').should();
 
+var owsCommon = require('@owstack/ows-common');
 var btcLib = require('../..');
-var BufferReader = btcLib.encoding.BufferReader;
-var BufferWriter = btcLib.encoding.BufferWriter;
+var BufferReader = owsCommon.encoding.BufferReader;
+var BufferWriter = owsCommon.encoding.BufferWriter;
 var data = require('../data/merkleblocks.js');
 var MerkleBlock = btcLib.MerkleBlock;
 var Transaction = btcLib.Transaction;
 var transactionVector = require('../data/tx_creation');
-
 
 describe('MerkleBlock', function() {
   var blockhex  = data.HEX[0];

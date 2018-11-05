@@ -3,9 +3,10 @@
 var chai = require('chai');
 var should = chai.should();
 
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../../');
 var Transaction = btcLib.Transaction;
-var Signature = btcLib.crypto.Signature;
+var Signature = keyLib.crypto.Signature;
 var SighashWitness = Transaction.SighashWitness;
 
 describe('Sighash Witness Program Version 0', function() {

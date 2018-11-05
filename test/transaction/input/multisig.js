@@ -4,14 +4,16 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
 
+var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../../..');
 var Address = btcLib.Address;
 var MultiSigInput = btcLib.Transaction.Input.MultiSig;
-var PrivateKey = btcLib.PrivateKey;
+var PrivateKey = keyLib.PrivateKey;
 var Script = btcLib.Script;
-var Signature = btcLib.crypto.Signature;
+var Signature = keyLib.crypto.Signature;
 var Transaction = btcLib.Transaction;
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 describe('MultiSigInput', function() {
 
@@ -71,14 +73,14 @@ describe('MultiSigInput', function() {
       .to(address, 1000000);
     var input = transaction.inputs[0];
 
-    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    lodash.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public1.toString() ||
               serialized === public2.toString() ||
               serialized === public3.toString();
     }).should.equal(true);
     transaction.sign(privateKey1);
-    _.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
+    lodash.every(input.publicKeysWithoutSignature(), function(publicKeyMissing) {
       var serialized = publicKeyMissing.toString();
       return serialized === public2.toString() ||
               serialized === public3.toString();

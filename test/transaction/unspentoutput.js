@@ -4,9 +4,10 @@ var chai = require('chai');
 var expect = chai.expect;
 var should = chai.should();
 
+var owsCommon = require('@owstack/ows-common');
 var btcLib = require('../..');
 var UnspentOutput = btcLib.Transaction.UnspentOutput;
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 describe('UnspentOutput', function() {
 
@@ -40,7 +41,7 @@ describe('UnspentOutput', function() {
   });
 
   it('fails if vout is not a number', function() {
-    var sample = _.cloneDeep(sampleData2);
+    var sample = lodash.cloneDeep(sampleData2);
     sample.vout = '1';
     expect(function() {
       return new UnspentOutput(sample);

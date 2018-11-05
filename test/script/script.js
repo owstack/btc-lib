@@ -3,13 +3,17 @@
 var should = require('chai').should();
 var expect = require('chai').expect;
 
+var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../..');
 var Address = btcLib.Address;
-var BufferUtil = btcLib.util.buffer;
+var BufferUtil = owsCommon.buffer;
+var Hash = owsCommon.Hash;
 var Networks = btcLib.Networks;
 var Opcode = btcLib.Opcode;
-var PublicKey = btcLib.PublicKey;
+var PublicKey = keyLib.PublicKey;
 var Script = btcLib.Script;
+var Signature = keyLib.crypto.Signature;
 
 describe('Script', function() {
 
@@ -254,7 +258,7 @@ describe('Script', function() {
       // from txid: 5c85ed63469aa9971b5d01063dbb8bcdafd412b2f51a3d24abf2e310c028bbf8
       // and input index: 5
       var scriptBuffer = new Buffer('483045022050eb59c79435c051f45003d9f82865c8e4df5699d7722e77113ef8cadbd92109022100d4ab233e070070eb8e0e62e3d2d2eb9474a5bf135c9eda32755acb0875a6c20601', 'hex');
-      var script = btcLib.Script.fromBuffer(scriptBuffer);
+      var script = Script.fromBuffer(scriptBuffer);
       script.isPublicKeyIn().should.equal(true);
     });
   });
@@ -714,8 +718,8 @@ describe('Script', function() {
 
   describe('#buildWitnessMultisigOutFromScript', function() {
     it('it will build nested witness scriptSig', function() {
-      var redeemScript = btcLib.Script();
-      var redeemHash = btcLib.crypto.Hash.sha256(redeemScript.toBuffer());
+      var redeemScript = Script();
+      var redeemHash = Hash.sha256(redeemScript.toBuffer());
       var s = Script.buildWitnessMultisigOutFromScript(redeemScript);
       var buf = s.toBuffer();
       buf[0].should.equal(0);
@@ -741,7 +745,7 @@ describe('Script', function() {
       s.toAddress().toString().should.equal('mxRN6AQJaDi5R6KmvMaEmZGe3n5ScV9u33');
     });
     it('should create script from public key', function() {
-      var pubkey = new PublicKey('022df8750480ad5b26950b25c7ba79d3e37d75f640f8e5d9bcd5b150a0f85014da');
+      var pubkey = new PublicKey('022df8750480ad5b26950b25c7ba79d3e37d75f640f8e5d9bcd5b150a0f85014da', 'BTC');
       var s = Script.buildPublicKeyHashOut(pubkey);
       should.exist(s);
       s.toString().should.equal('OP_DUP OP_HASH160 20 0x9674af7395592ec5d91573aa8d6557de55f60147 OP_EQUALVERIFY OP_CHECKSIG');
@@ -908,8 +912,8 @@ describe('Script', function() {
 
   describe('toAddress', function() {
     var pubkey = new PublicKey('027ffeb8c7795d529ee9cd96512d472cefe398a0597623438ac5d066a64af50072');
-    var liveAddress = pubkey.toAddress(Networks.livenet);
-    var testAddress = pubkey.toAddress(Networks.testnet);
+    var liveAddress = Address.fromPublicKey(pubkey, Networks.livenet);
+    var testAddress = Address.fromPublicKey(pubkey, Networks.testnet);
 
     it('priorize the network argument', function() {
       var script = new Script(liveAddress);
@@ -1021,7 +1025,7 @@ describe('Script', function() {
     });
     it('should handle P2SH-multisig-in scripts from utility', function() {
       // create a well-formed signature, does not need to match pubkeys
-      var signature = btcLib.crypto.Signature.fromString('30060201FF0201FF');
+      var signature = Signature.fromString('30060201FF0201FF');
       var signatures = [ signature.toBuffer() ];
       var p2sh = Script.buildP2SHMultisigIn(pubKeyHexes, 1, signatures, {});
       p2sh.getSignatureOperationsCount(true).should.equal(0);

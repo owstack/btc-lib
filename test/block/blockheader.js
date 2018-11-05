@@ -2,12 +2,13 @@
 
 var should = require('chai').should();
 
+var owsCommon = require('@owstack/ows-common');
 var fs = require('fs');
 var btcLib = require('../..');
 var BlockHeader = btcLib.BlockHeader;
-var BN = btcLib.crypto.BN;
-var BufferReader = btcLib.encoding.BufferReader;
-var BufferWriter = btcLib.encoding.BufferWriter;
+var BN = owsCommon.BN;
+var BufferReader = owsCommon.encoding.BufferReader;
+var BufferWriter = owsCommon.encoding.BufferWriter;
 
 // https://test-bex.openwalletstack.com/block/000000000b99b16390660d79fcc138d2ad0c89a0d044c4201a02bdf1f61ffa11
 var dataRawBlockBuffer = fs.readFileSync('test/data/blk86756-testnet.dat');

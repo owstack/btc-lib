@@ -4,14 +4,16 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
 
+var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../../..');
 var Address = btcLib.Address;
-var PrivateKey = btcLib.PrivateKey;
+var PrivateKey = keyLib.PrivateKey;
 var Networks = btcLib.Networks;
 var Script = btcLib.Script;
-var Signature = btcLib.crypto.Signature;
+var Signature = keyLib.crypto.Signature;
 var Transaction = btcLib.Transaction;
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 describe('PublicKeyHashInput', function() {
 

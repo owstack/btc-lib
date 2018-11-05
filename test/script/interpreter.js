@@ -3,19 +3,22 @@
 var should = require('chai').should();
 var sinon = require('sinon');
 
+var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../..');
-var BN = btcLib.crypto.BN;
-var BufferWriter = btcLib.encoding.BufferWriter;
+var Address = btcLib.Address;
+var BN = owsCommon.BN;
+var BufferWriter = owsCommon.encoding.BufferWriter;
 var Interpreter = btcLib.Script.Interpreter;
 var Opcode = btcLib.Opcode;
-var PrivateKey = btcLib.PrivateKey;
+var PrivateKey = keyLib.PrivateKey;
 var Script = btcLib.Script;
 var script_valid = require('../data/bitcoind/script_valid');
 var script_invalid = require('../data/bitcoind/script_invalid');
 var Transaction = btcLib.Transaction;
 var tx_valid = require('../data/bitcoind/tx_valid');
 var tx_invalid = require('../data/bitcoind/tx_invalid');
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 //the script string format used in bitcoind data tests
 Script.fromBitcoindString = function(str) {
@@ -232,7 +235,7 @@ describe('Interpreter', function() {
       // first we create a transaction
       var privateKey = new PrivateKey('cSBnVM4xvxarwGQuAfQFwqDg9k5tErHUHzgWsEfD4zdwUasvqRVY');
       var publicKey = privateKey.publicKey;
-      var fromAddress = publicKey.toAddress();
+      var fromAddress = Address.fromPublicKey(publicKey);
       var toAddress = 'mrU9pEmAx26HcbKVrABvgL7AwA5fjNFoDc';
       var scriptPubkey = Script.buildPublicKeyHashOut(fromAddress);
       var utxo = {

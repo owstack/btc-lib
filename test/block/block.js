@@ -3,10 +3,11 @@
 var chai = require('chai');
 var should = chai.should();
 
+var owsCommon = require('@owstack/ows-common');
 var btcLib = require('../..');
-var BN = btcLib.crypto.BN;
-var BufferReader = btcLib.encoding.BufferReader;
-var BufferWriter = btcLib.encoding.BufferWriter;
+var BN = owsCommon.BN;
+var BufferReader = owsCommon.encoding.BufferReader;
+var BufferWriter = owsCommon.encoding.BufferWriter;
 var BlockHeader = btcLib.BlockHeader;
 var Block = btcLib.Block;
 var fs = require('fs');

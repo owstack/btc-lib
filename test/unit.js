@@ -3,8 +3,8 @@
 var expect = require('chai').expect;
 var should = require('chai').should();
 
-var btcLib = require('..');
 var owsCommon = require('@owstack/ows-common');
+var btcLib = require('..');
 var errors = owsCommon.errors;
 var Unit = btcLib.Unit;
 

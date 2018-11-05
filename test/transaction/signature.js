@@ -6,13 +6,14 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 
 var owsCommon = require('@owstack/ows-common');
+var keyLib = require('@owstack/key-lib');
 var btcLib = require('../..');
 var errors = owsCommon.errors;
 var Script = btcLib.Script;
-var PrivateKey = btcLib.PrivateKey;
+var PrivateKey = keyLib.PrivateKey;
 var Transaction = btcLib.Transaction;
 var TransactionSignature = btcLib.Transaction.Signature;
-var _ = require('lodash');
+var lodash = owsCommon.deps.lodash;
 
 describe('TransactionSignature', function() {
 
