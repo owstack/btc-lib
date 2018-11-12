@@ -1,8 +1,7 @@
 Btc Lib
 =======
 
-[![NPM Package](https://img.shields.io/npm/v/btc-lib.svg?style=flat-square)](https://www.npmjs.org/package/btc-lib)
-[![Build Status](https://img.shields.io/travis/owstack/btc-lib.svg?branch=master&style=flat-square)](https://travis-ci.org/owstack/btc-lib)
+[![NPM Package](https://img.shields.io/npm/v/@owstack/btc-lib.svg?style=flat-square)](https://www.npmjs.org/package/@owstack/btc-lib)[![Build Status](https://img.shields.io/travis/owstack/btc-lib.svg?branch=master&style=flat-square)](https://travis-ci.org/owstack/btc-lib)
 [![Coverage Status](https://img.shields.io/coveralls/owstack/btc-lib.svg?style=flat-square)](https://coveralls.io/r/owstack/btc-lib)
 
 A pure and powerful JavaScript Bitcoin library.
