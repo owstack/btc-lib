@@ -9,6 +9,7 @@ btcLib.version = 'v' + require('./package.json').version;
 btcLib.Address = require('./lib/address');
 btcLib.Block = require('./lib/block');
 btcLib.BlockHeader = require('./lib/block/blockheader');
+btcLib.Defaults = require('./lib/common/defaults');
 btcLib.MerkleBlock = require('./lib/block/merkleblock');
 btcLib.Networks = require('./lib/networks');
 btcLib.Opcode = require('./lib/opcode');

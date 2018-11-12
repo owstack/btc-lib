@@ -10,7 +10,7 @@ var lodash = owsCommon.deps.lodash;
 
 describe('Networks', function() {
 
-  it('will get network based on string symbol value', function() {
+  it('will get network based on string code value', function() {
     var network = Networks.get('BTC');
     network.should.equal(Networks.livenet);
     network.should.equal(Networks.mainnet);
@@ -31,7 +31,7 @@ describe('Networks', function() {
 
   var constants = [
     'name',
-    'symbol',
+    'code',
     'coin',
     'protocol',
     'prefix.pubkeyhash',
@@ -70,8 +70,8 @@ describe('Networks', function() {
   });
 
   it('network object should be immutable', function() {
-    expect(Networks.get('BTC').symbol).to.equal('BTC')
-    var fn = function() { Networks.get('BTC').symbol = 'Something else' }
+    expect(Networks.get('BTC').code).to.equal('BTC')
+    var fn = function() { Networks.get('BTC').code = 'Something else' }
     expect(fn).to.throw(TypeError)
   });
 
