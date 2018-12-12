@@ -1,6 +1,6 @@
 {
   "name": "@owstack/btc-lib",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Javascript library to build bitcoin and blockchain-based applications.",
   "main": "index.js",
   "scripts": {
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@owstack/ows-common": "^0.0.11",
-    "@owstack/key-lib": "^0.0.19",
-    "@owstack/network-lib": "^0.0.8",
+    "@owstack/key-lib": "^0.0.21",
+    "@owstack/network-lib": "^0.0.10",
     "buffer-compare": "=1.0.0",
     "inherits": "=2.0.1"
   },
