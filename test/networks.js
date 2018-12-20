@@ -30,9 +30,10 @@ describe('Networks', function() {
   });
 
   var constants = [
+    'currency',
+    'description',
     'name',
-    'code',
-    'coin',
+    'coinIndex',
     'protocol',
     'prefix.pubkeyhash',
     'prefix.privatekey',
@@ -70,8 +71,8 @@ describe('Networks', function() {
   });
 
   it('network object should be immutable', function() {
-    expect(Networks.get('BTC').code).to.equal('BTC')
-    var fn = function() { Networks.get('BTC').code = 'Something else' }
+    expect(Networks.get('BTC').name).to.equal('BTC')
+    var fn = function() { Networks.get('BTC').name = 'Something else' }
     expect(fn).to.throw(TypeError)
   });
 
