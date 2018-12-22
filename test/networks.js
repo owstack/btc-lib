@@ -11,13 +11,13 @@ var lodash = owsCommon.deps.lodash;
 describe('Networks', function() {
 
   it('will get network based on string code value', function() {
-    var network = Networks.get('BTC');
+    var network = Networks.get('btc');
     network.should.equal(Networks.livenet);
     network.should.equal(Networks.mainnet);
     network.should.equal(Networks.defaultNetwork);
-    var network = Networks.get('REGTEST');
+    var network = Networks.get('regtest');
     network.should.equal(Networks.regtest);
-    var network = Networks.get('TESTNET');
+    var network = Networks.get('testnet');
     network.should.equal(Networks.testnet);
   });
 
@@ -25,7 +25,7 @@ describe('Networks', function() {
     Networks.defaultNetwork.should.equal(Networks.livenet);
     Networks.defaultNetwork = Networks.testnet;
     Networks.defaultNetwork.should.equal(Networks.testnet);
-    Networks.defaultNetwork = Networks.get('BTC');
+    Networks.defaultNetwork = Networks.get('btc');
     Networks.defaultNetwork.should.equal(Networks.livenet);
   });
 
@@ -44,35 +44,35 @@ describe('Networks', function() {
 
   constants.forEach(function(key) {
     it('should have constant ' + key + ' for all networks', function() {
-      lodash.has(Networks.get('BTC'), key).should.equal(true);
-      lodash.has(Networks.get('REGTEST'), key).should.equal(true);
-      lodash.has(Networks.get('TESTNET'), key).should.equal(true);
+      lodash.has(Networks.get('btc'), key).should.equal(true);
+      lodash.has(Networks.get('regtest'), key).should.equal(true);
+      lodash.has(Networks.get('testnet'), key).should.equal(true);
     });
   });
 
   it('tests only for the specified key', function() {
-    expect(Networks.get(0x00, 'prefix.pubkeyhash')).to.equal(Networks.get('BTC'));
+    expect(Networks.get(0x00, 'prefix.pubkeyhash')).to.equal(Networks.get('btc'));
     // Testnet and Regtest have the same pubkeyhash value.
-    expect(Networks.get(0x6f, 'prefix.pubkeyhash').alias).to.equal(Networks.get('TESTNET').alias);
+    expect(Networks.get(0x6f, 'prefix.pubkeyhash').alias).to.equal(Networks.get('testnet').alias);
     expect(Networks.get(0x6f, 'prefix.pubkeyhash').alias).to.equal(Networks.testnet.alias);
     expect(Networks.get(0xa0, 'prefix.privatekey')).to.equal(undefined);
   });
 
   it('can test for multiple keys', function() {
-    expect(Networks.get(0x00, ['prefix.pubkeyhash', 'prefix.scripthash'])).to.equal(Networks.get('BTC'));
+    expect(Networks.get(0x00, ['prefix.pubkeyhash', 'prefix.scripthash'])).to.equal(Networks.get('btc'));
     // Testnet and Regtest have the same pubkeyhash value.
-    expect(Networks.get(0x6f, ['prefix.pubkeyhash', 'prefix.scripthash']).alias).to.equal(Networks.get('TESTNET').alias);
-    expect(Networks.get(0xc4, ['prefix.pubkeyhash', 'prefix.scripthash']).alias).to.equal(Networks.get('TESTNET').alias);
+    expect(Networks.get(0x6f, ['prefix.pubkeyhash', 'prefix.scripthash']).alias).to.equal(Networks.get('testnet').alias);
+    expect(Networks.get(0xc4, ['prefix.pubkeyhash', 'prefix.scripthash']).alias).to.equal(Networks.get('testnet').alias);
     expect(Networks.get(0xa0, ['prefix.privatekey', 'port'])).to.equal(undefined);
   });
 
   it('converts to string using the "name" property', function() {
-    Networks.get('BTC').toString().should.equal('BTC');
+    Networks.get('btc').toString().should.equal('btc');
   });
 
   it('network object should be immutable', function() {
-    expect(Networks.get('BTC').name).to.equal('BTC')
-    var fn = function() { Networks.get('BTC').name = 'Something else' }
+    expect(Networks.get('btc').name).to.equal('btc')
+    var fn = function() { Networks.get('btc').name = 'Something else' }
     expect(fn).to.throw(TypeError)
   });
 

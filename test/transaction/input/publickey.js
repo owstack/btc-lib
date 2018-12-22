@@ -21,7 +21,7 @@ describe('PublicKeyInput', function() {
   };
 
   var privateKey = PrivateKey.fromWIF('cQ7tSSQDEwaxg9usnnP1Aztqvm9nCQVfNWz9kU2rdocDjknF2vd6');
-  var addressFromKey = Address.fromPrivateKey(privateKey, 'BTC');
+  var addressFromKey = Address.fromPrivateKey(privateKey, 'btc');
   utxo.address.should.equal(addressFromKey.toString());
 
   var destKey = new PrivateKey();

@@ -36,7 +36,7 @@ describe('Address', function() {
 
   it('should throw an error because of bad type param', function() {
     (function() {
-      return new Address(PKHLivenet[0], 'BTC', 'pubkey');
+      return new Address(PKHLivenet[0], 'btc', 'pubkey');
     }).should.throw('Third argument must be "pubkeyhash" or "scripthash"');
   });
 
@@ -50,9 +50,9 @@ describe('Address', function() {
           } else if (d[2].addrType === 'pubkey') {
             type = 'pubkeyhash';
           }
-          var network = 'BTC';
+          var network = 'btc';
           if (d[2].isTestnet) {
-            network = 'TESTNET';
+            network = 'testnet';
           }
           return new Address(d[0], network, type);
         });
@@ -120,17 +120,17 @@ describe('Address', function() {
   describe('validation', function() {
 
     it('getValidationError detects network mismatchs', function() {
-      var error = Address.getValidationError('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'TESTNET');
+      var error = Address.getValidationError('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'testnet');
       should.exist(error);
     });
 
     it('isValid returns true on a valid address', function() {
-      var valid = Address.isValid('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'BTC');
+      var valid = Address.isValid('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'btc');
       valid.should.equal(true);
     });
 
     it('isValid returns false on network mismatch', function() {
-      var valid = Address.isValid('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'TESTNET');
+      var valid = Address.isValid('37BahqRsFrAd3qLiNNwLNV3AWMRD7itxTo', 'testnet');
       valid.should.equal(false);
     });
 
@@ -150,28 +150,28 @@ describe('Address', function() {
 
     it('validates correctly the P2SH testnet test vector', function() {
       for (var i = 0; i < P2SHTestnet.length; i++) {
-        var error = Address.getValidationError(P2SHTestnet[i], 'TESTNET');
+        var error = Address.getValidationError(P2SHTestnet[i], 'testnet');
         should.not.exist(error);
       }
     });
 
     it('rejects correctly the P2PKH livenet test vector with "testnet" parameter', function() {
       for (var i = 0; i < PKHLivenet.length; i++) {
-        var error = Address.getValidationError(PKHLivenet[i], 'TESTNET');
+        var error = Address.getValidationError(PKHLivenet[i], 'testnet');
         should.exist(error);
       }
     });
 
     it('validates correctly the P2PKH livenet test vector with "livenet" parameter', function() {
       for (var i = 0; i < PKHLivenet.length; i++) {
-        var error = Address.getValidationError(PKHLivenet[i], 'BTC');
+        var error = Address.getValidationError(PKHLivenet[i], 'btc');
         should.not.exist(error);
       }
     });
 
     it('should not validate if checksum is invalid', function() {
       for (var i = 0; i < badChecksums.length; i++) {
-        var error = Address.getValidationError(badChecksums[i], 'BTC', 'pubkeyhash');
+        var error = Address.getValidationError(badChecksums[i], 'btc', 'pubkeyhash');
         should.exist(error);
         error.message.should.equal('Checksum mismatch');
       }
@@ -180,12 +180,12 @@ describe('Address', function() {
     it('should not validate on a network mismatch', function() {
       var error, i;
       for (i = 0; i < PKHLivenet.length; i++) {
-        error = Address.getValidationError(PKHLivenet[i], 'TESTNET', 'pubkeyhash');
+        error = Address.getValidationError(PKHLivenet[i], 'testnet', 'pubkeyhash');
         should.exist(error);
         error.message.should.equal('Address has mismatched network type.');
       }
       for (i = 0; i < PKHTestnet.length; i++) {
-        error = Address.getValidationError(PKHTestnet[i], 'BTC', 'pubkeyhash');
+        error = Address.getValidationError(PKHTestnet[i], 'btc', 'pubkeyhash');
         should.exist(error);
         error.message.should.equal('Address has mismatched network type.');
       }
@@ -193,7 +193,7 @@ describe('Address', function() {
 
     it('should not validate on a type mismatch', function() {
       for (var i = 0; i < PKHLivenet.length; i++) {
-        var error = Address.getValidationError(PKHLivenet[i], 'BTC', 'scripthash');
+        var error = Address.getValidationError(PKHLivenet[i], 'btc', 'scripthash');
         should.exist(error);
         error.message.should.equal('Address has mismatched type.');
       }
@@ -201,7 +201,7 @@ describe('Address', function() {
 
     it('should not validate on non-base58 characters', function() {
       for (var i = 0; i < nonBase58.length; i++) {
-        var error = Address.getValidationError(nonBase58[i], 'BTC', 'pubkeyhash');
+        var error = Address.getValidationError(nonBase58[i], 'btc', 'pubkeyhash');
         should.exist(error);
         error.message.should.equal('Non-base58 character');
       }
@@ -209,7 +209,7 @@ describe('Address', function() {
 
     it('testnet addresses are validated correctly', function() {
       for (var i = 0; i < PKHTestnet.length; i++) {
-        var error = Address.getValidationError(PKHTestnet[i], 'TESTNET');
+        var error = Address.getValidationError(PKHTestnet[i], 'testnet');
         should.not.exist(error);
       }
     });
@@ -307,13 +307,13 @@ describe('Address', function() {
 
     it('should make an address from a pubkey hash buffer', function() {
       var hash = pubkeyhash; //use the same hash
-      var a = Address.fromPublicKeyHash(hash, 'BTC');
+      var a = Address.fromPublicKeyHash(hash, 'btc');
       a.network.should.equal(Networks.livenet);
       a.toString().should.equal(str);
-      var b = Address.fromPublicKeyHash(hash, 'TESTNET');
+      var b = Address.fromPublicKeyHash(hash, 'testnet');
       b.network.should.equal(Networks.testnet);
       b.type.should.equal('pubkeyhash');
-      new Address(hash, 'BTC').toString().should.equal(str);
+      new Address(hash, 'btc').toString().should.equal(str);
     });
 
     it('should make an address using the default network', function() {
@@ -338,7 +338,7 @@ describe('Address', function() {
 
     it('should make this address from a compressed pubkey', function() {
       var pubkey = new PublicKey('0285e9737a74c30a873f74df05124f2aa6f53042c2fc0a130d6cbd7d16b944b004');
-      var address = Address.fromPublicKey(pubkey, "BTC");
+      var address = Address.fromPublicKey(pubkey, 'btc');
       address.toString().should.equal('19gH5uhqY6DKrtkU66PsZPUZdzTd11Y7ke');
     });
 
@@ -351,9 +351,9 @@ describe('Address', function() {
     it('should make this address from an uncompressed pubkey', function() {
       var pubkey = new PublicKey('0485e9737a74c30a873f74df05124f2aa6f53042c2fc0a130d6cbd7d16b944b00' +
         '4833fef26c8be4c4823754869ff4e46755b85d851077771c220e2610496a29d98');
-      var a = Address.fromPublicKey(pubkey, 'BTC');
+      var a = Address.fromPublicKey(pubkey, 'btc');
       a.toString().should.equal('16JXnhxjJUhxfyx4y6H4sFcxrgt8kQ8ewX');
-      var b = new Address(pubkey, 'BTC', 'pubkeyhash');
+      var b = new Address(pubkey, 'btc', 'pubkeyhash');
       b.toString().should.equal('16JXnhxjJUhxfyx4y6H4sFcxrgt8kQ8ewX');
     });
 
@@ -361,7 +361,7 @@ describe('Address', function() {
       var custom = {
         name: 'customnetwork',
         code: 'customnetwork',
-        preference: 'BTC',
+        currency: 'BTC',
         prefix: {
           pubkeyhash: 0x1c,
           privatekey: 0x1e,
@@ -394,17 +394,17 @@ describe('Address', function() {
         var s = new Script('OP_DUP OP_HASH160 20 ' +
           '0xc8e11b0eb0d2ad5362d894f048908341fa61b6e1 OP_EQUALVERIFY OP_CHECKSIG');
         var buf = s.toBuffer();
-        var a = Address.fromScript(s, 'BTC');
+        var a = Address.fromScript(s, 'btc');
         a.toString().should.equal('1KK9oz4bFH8c1t6LmighHaoSEGx3P3FEmc');
-        var b = new Address(s, 'BTC');
+        var b = new Address(s, 'btc');
         b.toString().should.equal('1KK9oz4bFH8c1t6LmighHaoSEGx3P3FEmc');
       });
 
       it('should make this address from a p2sh input script', function() {
         var s = Script.fromString('OP_HASH160 20 0xa6ed4af315271e657ee307828f54a4365fa5d20f OP_EQUAL');
-        var a = Address.fromScript(s, 'BTC');
+        var a = Address.fromScript(s, 'btc');
         a.toString().should.equal('3GueMn6ruWVfQTN4XKBGEbCbGLwRSUhfnS');
-        var b = new Address(s, 'BTC');
+        var b = new Address(s, 'btc');
         b.toString().should.equal('3GueMn6ruWVfQTN4XKBGEbCbGLwRSUhfnS');
       });
 
@@ -429,20 +429,20 @@ describe('Address', function() {
     });
 
     it('should derive from this known address string testnet', function() {
-      var a = new Address(PKHTestnet[0], 'TESTNET');
+      var a = new Address(PKHTestnet[0], 'testnet');
       var b = new Address(a.toString());
       b.toString().should.equal(PKHTestnet[0]);
       b.network.should.equal(Networks.testnet);
     });
 
     it('should derive from this known address string livenet scripthash', function() {
-      var a = new Address(P2SHLivenet[0], 'BTC', 'scripthash');
+      var a = new Address(P2SHLivenet[0], 'btc', 'scripthash');
       var b = new Address(a.toString());
       b.toString().should.equal(P2SHLivenet[0]);
     });
 
     it('should derive from this known address string testnet scripthash', function() {
-      var address = new Address(P2SHTestnet[0], 'TESTNET', 'scripthash');
+      var address = new Address(P2SHTestnet[0], 'testnet', 'scripthash');
       address = new Address(address.toString());
       address.toString().should.equal(P2SHTestnet[0]);
     });
@@ -571,7 +571,7 @@ describe('Address', function() {
 
     it('fails if invalid array is provided', function() {
       expect(function() {
-        return Address.createMultisig([], 3, 'TESTNET');
+        return Address.createMultisig([], 3, 'testnet');
       }).to.throw('Number of required signatures must be less than or equal to the number of public keys');
     });
   });
