@@ -22,13 +22,13 @@ describe('Unit', function() {
     }).to.not.throw();
   });
 
-  it('has property accesors "BTC", "mBTC", "uBTC", "bits", and "satoshis"', function() {
+  it('has property accesors "BTC", "mBTC", "uBTC", "bits", and "sats"', function() {
     var unit = new Unit(1.2, 'BTC');
     unit.BTC.should.equal(1.2);
     unit.mBTC.should.equal(1200);
     unit.uBTC.should.equal(1200000);
     unit.bits.should.equal(1200000);
-    unit.satoshis.should.equal(120000000);
+    unit.sats.should.equal(120000000);
   });
 
   it('a string amount is allowed', function() {
@@ -43,8 +43,8 @@ describe('Unit', function() {
     unit = Unit.fromBits('100');
     unit.bits.should.equal(100);
 
-    unit = Unit.fromSatoshis('8999');
-    unit.satoshis.should.equal(8999);
+    unit = Unit.fromSats('8999');
+    unit.sats.should.equal(8999);
 
     unit = Unit.fromFiat('43', 350);
     unit.BTC.should.equal(0.12285714);
@@ -62,33 +62,33 @@ describe('Unit', function() {
     unit = Unit.fromBits(100);
     unit.bits.should.equal(100);
 
-    unit = Unit.fromSatoshis(8999);
-    unit.satoshis.should.equal(8999);
+    unit = Unit.fromSats(8999);
+    unit.sats.should.equal(8999);
 
     unit = Unit.fromFiat(43, 350);
     unit.BTC.should.equal(0.12285714);
   });
 
-  it('converts to satoshis correctly', function() {
+  it('converts to sats correctly', function() {
     /* jshint maxstatements: 25 */
     var unit;
 
     unit = Unit.fromBTC(1.3);
     unit.mBTC.should.equal(1300);
     unit.bits.should.equal(1300000);
-    unit.satoshis.should.equal(130000000);
+    unit.sats.should.equal(130000000);
 
     unit = Unit.fromMillis(1.3);
     unit.BTC.should.equal(0.0013);
     unit.bits.should.equal(1300);
-    unit.satoshis.should.equal(130000);
+    unit.sats.should.equal(130000);
 
     unit = Unit.fromBits(1.3);
     unit.BTC.should.equal(0.0000013);
     unit.mBTC.should.equal(0.0013);
-    unit.satoshis.should.equal(130);
+    unit.sats.should.equal(130);
 
-    unit = Unit.fromSatoshis(3);
+    unit = Unit.fromSats(3);
     unit.BTC.should.equal(0.00000003);
     unit.mBTC.should.equal(0.00003);
     unit.bits.should.equal(0.03);
@@ -98,7 +98,7 @@ describe('Unit', function() {
     var unit = Unit.fromBTC(0.00000003);
     unit.mBTC.should.equal(0.00003);
     unit.bits.should.equal(0.03);
-    unit.satoshis.should.equal(3);
+    unit.sats.should.equal(3);
   });
 
   it('exposes unit codes', function() {
@@ -111,8 +111,8 @@ describe('Unit', function() {
     should.exist(Unit.bits);
     Unit.bits.should.equal('bits');
 
-    should.exist(Unit.satoshis);
-    Unit.satoshis.should.equal('satoshis');
+    should.exist(Unit.sats);
+    Unit.sats.should.equal('sats');
   });
 
   it('exposes a method that converts to different units', function() {
@@ -120,7 +120,7 @@ describe('Unit', function() {
     unit.to(Unit.BTC).should.equal(unit.BTC);
     unit.to(Unit.mBTC).should.equal(unit.mBTC);
     unit.to(Unit.bits).should.equal(unit.bits);
-    unit.to(Unit.satoshis).should.equal(unit.satoshis);
+    unit.to(Unit.sats).should.equal(unit.sats);
   });
 
   it('exposes shorthand conversion methods', function() {
@@ -128,7 +128,7 @@ describe('Unit', function() {
     unit.toBTC().should.equal(unit.BTC);
     unit.toMillis().should.equal(unit.mBTC);
     unit.toBits().should.equal(unit.bits);
-    unit.toSatoshis().should.equal(unit.satoshis);
+    unit.toSats().should.equal(unit.sats);
   });
 
   it('can convert to fiat', function() {
@@ -160,7 +160,7 @@ describe('Unit', function() {
 
   it('inspect method displays nicely', function() {
     var unit = new Unit(1.3, 'BTC');
-    unit.inspect().should.equal('<Unit: 130000000 satoshis>');
+    unit.inspect().should.equal('<Unit: 130000000 sats>');
   });
 
   it('fails when the unit is not recognized', function() {
