@@ -21,4 +21,10 @@ btcLib.Unit = require('./lib/unit');
 // Internal usage, exposed for testing/advanced tweaking
 btcLib.Transaction.sighash = require('./lib/transaction/sighash');
 
+// Inject this library into each of its networks as network.lib.
+var btcNetworks = require('@owstack/network-lib').getFiltered({currency: btcLib.Networks.currency});
+for (var i = 0; i < btcNetworks.length; i++) {
+	btcNetworks[i].lib = btcLib;
+}
+
 module.exports = btcLib;
